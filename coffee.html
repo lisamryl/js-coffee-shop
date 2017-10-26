@@ -50,46 +50,58 @@
 
     // Set these variables to their DOM elements
 
+    const prices = new Map ([
+        ["brew", 2.05],
+        ["espresso", 3.25],
+        ["latte", 4.15],
+        ["hot chocolate", 2.50]]);
+    // refactor by adding variable for coffee-image
     // let coffeeImage = document.querySelector("#coffee-image");
     // coffeeImage.setAttribute('src', 'static/coffee_beans.jpg');
     $('#coffee-image').attr('src', 'static/coffee_beans.jpg');
 
-
+    let drinksOrdered = [];
     //let revenueMessage = document.querySelector('#message');
 
-    function setupCoffee() {
+    function setupCoffee(drinkType) {
         // coffeeImage.setAttribute('src', 'static/coffee_machine.jpg');
         // setTimeout(makeCoffee, 1500);
         $('#coffee-image').attr('src', 'static/coffee_machine.jpg');
-        setTimeout(makeCoffee, 1500);
+        setTimeout(function() { makeCoffee(drinkType); }, 1500);
     }
 
-    function makeCoffee() {
+    function makeCoffee(drinkType) {
         // coffeeImage.setAttribute('src', 'static/coffee_mug.jpg');
-        // setTimeout(resetCoffee, 2500)
+        // setTimeout(resetCoffee, 2500);
         $('#coffee-image').attr('src', 'static/coffee_mug.jpg');
-        setTimeout(resetCoffee, 2500)
-
+        drinksOrdered.push(drinkType);
+        setTimeout(resetCoffee, 2500);
+        revenue(drinksOrdered, prices);
     }
 
     function resetCoffee() {
         // coffeeImage.setAttribute('src', 'static/coffee_beans.jpg');
         $('#coffee-image').attr('src', 'static/coffee_beans.jpg');
+    }
 
+    function revenue(drinksOrdered, prices) {
+        let total = 0;
+        for (drink of drinksOrdered) {
+            total += prices.get(drink);
+        }
+        console.log(total);
+        console.log(drinksOrdered);
     }
 
     // coffeeImage.addEventListener('click', setupCoffee);
-    $('#coffee-image').on('click', setupCoffee);
-
+    $('#coffee-image').on('click', function() { setupCoffee("brew"); });
+    $('#espresso').on('click', function() { setupCoffee("espresso"); });
+    $('#latte').on('click', function() { setupCoffee("latte"); });
+    $('#hot-chocolate').on('click', function() { setupCoffee("hot chocolate"); });
 
     // use this JavaScript object in further study step
 
-    const prices = {
-        "brew": 2.05,
-        "espresso": 3.25,
-        "latte": 4.15,
-        "hot chocolate": 2.50
-    };
+
 
 
 </script>
